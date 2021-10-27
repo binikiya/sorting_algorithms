@@ -7,18 +7,18 @@
  */
 void swapped(listint_t *curr, listint_t **h)
 {
-listint_t temp = NULL;
+listint_t *temp = NULL;
 temp = curr->prev;
 if (curr->next)
 curr->next->prev = temp;
 if (temp->prev)
 temp->prev->next = curr;
 else
-*head = current;
+*h = curr;
 curr->prev = curr->prev->prev;
 temp->next = curr->next;
 temp->prev = curr;
-curr->next = tmp;
+curr->next = temp;
 }
 
 /**
