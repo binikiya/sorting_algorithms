@@ -1,0 +1,11 @@
+#include "sort.h"
+
+/**
+ * selection_sort - swaps list of integers using selection sorts
+ * @array: lists of integers to be sorted
+ * @size: size of the list
+ */
+void selection_sort(int *array, listint_t size)
+{
+  
+}
