@@ -41,9 +41,9 @@ while (l < end)
 {
 if (l >= r)
 {
-if (lfound)
+if (lfound == 1)
 swap(array + end, array + r, array, size), beg += 1;
-else if (rfound)
+else if (rfound == 1)
 end -= 1;
 else
 swap(array + end, array + l, array, size);
@@ -54,11 +54,11 @@ if (array[l] >= pivot)
 lfound = 1;
 if (array[r] < pivot)
 rfound = 1;
-if (!lfound)
+if (lfound == 0)
 l++;
-if (!rfound)
+if (rfound == 0)
 r--;
-if (lfound && rfound)
+if (lfound == 1 && rfound == 1)
 {
 swap(array + l, array + r, array, size);
 lfound = 0, rfound = 0;
