@@ -1,52 +1,51 @@
 #include "sort.h"
 
 /**
- * swapped - swaps two numbers
- * @curr: current node
- * @h: head of the doubly linked list
+ * swapprev - swaps a node with the previous node in a doubly linked list
+ * @current: the current node
+ * @head: head of the doubly linked list
  */
-void swapped(listint_t *curr, listint_t **h)
+void swapprev(listint_t *current, listint_t **head)
 {
-listint_t *temp = NULL;
-temp = curr->prev;
-if (curr->next)
-curr->next->prev = temp;
-if (temp->prev)
-temp->prev->next = curr;
+listint_t *tmp = NULL;
+tmp = current->prev;
+if (current->next)
+current->next->prev = tmp;
+if (tmp->prev)
+tmp->prev->next = current;
 else
-*h = curr;
-curr->prev = curr->prev->prev;
-temp->next = curr->next;
-temp->prev = curr;
-curr->next = temp;
+*head = current;
+current->prev = current->prev->prev;
+tmp->next = current->next;
+tmp->prev = current;
+current->next = tmp;
 }
-
 /**
- * insertion_sort_list - sort the list using insertion sort
- * @list: pointer of lists that have integer
+ * insertion_sort_list - implemetnation of insertion sort in
+ * a doubly linked list
+ * @list: a pointer to the head of the list to be sorted
  */
 void insertion_sort_list(listint_t **list)
 {
-listint_t *temp = NULL;
-listint_t *current = NULL, *prev = NULL;
+listint_t *current = NULL, *prev_tmp = NULL, *prev = NULL;
 if (!list)
 return;
-temp = *list;
-while (temp)
+current = *list;
+while (current)
 {
-prev = temp->prev;
+prev = current->prev;
 while (prev)
 {
-if (temp->n >= prev->n)
+if (current->n >= prev->n)
 break;
-swapped(temp, list);
-current = prev;
-prev = temp;
-temp = current;
+swapprev(current, list);
+prev_tmp = prev;
+prev = current;
+current = prev_tmp;
+print_list(*list);
 prev = prev->prev;
-temp = temp->prev;
+current = current->prev;
 }
-temp = temp->next;
+current = current->next;
 }
 }
-	  
