@@ -1,6 +1,0 @@
-#include "sort.h"
-
-/**
- * bubble_sort - sorts an array of integers using bubble sort
- * @array: pointer that have lists of integers
- * @size:
