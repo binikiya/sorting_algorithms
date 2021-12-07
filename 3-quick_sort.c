@@ -1,54 +1,77 @@
 #include "sort.h"
 
-
 /**
- * swap - swaps two values
- * @a: first value
- * @b: second value
+ * swap - swaps two integers in an array and prints the array
+ * @a: first number
+ * @b: second number
+ * @array: the arry to be printed
+ * @size: size of the array
  */
-void swap(int *a, int *b)
+void swap(int *a, int *b, int *array, size_t size)
 {
-int t = *a;
+int tmp = *a;
 *a = *b;
-*b = t;
+*b = tmp;
+print_array(array, size);
 }
 
 /**
- * partition - partitions the list in to two
- * @arr: list of array
- * @low: lowest value
- * @high: highest value
- *
- * Return: value
+ * quick_sort_rec - a recursive implementation of the quick sort algorithm
+ * @array: the array to be sorted
+ * @size: the length of the array
+ * @beg: the begning of the usnorted subset of the array from the left
+ *    [1,2,4,3,7,6,8] in this case index 2
+ * @end: the begning of the unsorted subset of the array from the right
  */
-int partition(int *arr, int low, int high)
+void quick_sort_rec(int *array, size_t size, size_t beg, size_t end)
 {
-int j;
-int pivot = arr[high];
-int i = low - 1;
-for (j = low; j < high; j++)
+int pivot;
+size_t l = beg, r = end - 1;
+unsigned int lfound = 0, rfound = 0;
+if (end <= beg || size <= 1)
+return;
+if (end == beg + 1)
 {
-if (arr[j] < pivot)
+if (array[beg] > array[end])
+swap(array + beg, array + end, array, size);
+return;
+}
+pivot = array[end];
+while (l < end)
 {
-i++;
-swap(&arr[i], &arr[j]);
+if (l >= r)
+{
+if (lfound)
+swap(array + end, array + r, array, size), beg += 1;
+else if (rfound)
+end -= 1;
+else
+swap(array + end, array + l, array, size);
+quick_sort_rec(array, size, beg, end);
+break;
+}
+if (array[l] >= pivot)
+lfound = 1;
+if (array[r] < pivot)
+rfound = 1;
+if (!lfound)
+l++;
+if (!rfound)
+r--;
+if (lfound && rfound)
+{
+swap(array + l, array + r, array, size);
+lfound = 0, rfound = 0;
 }
 }
-swap(&arr[i + 1], &arr[high]);
-return (i + 1);
 }
 
 /**
- * quick_sort - sorts list of integers using quick sort
- * @array: Pointers that have list of integers
- * @size: size of the list
+ * quick_sort - an implementation of the quick sort algorithm
+ * @array: the array to be sorted
+ * @size: the length of the array
  */
 void quick_sort(int *array, size_t size)
 {
-if (array[0] < array[size - 1])
-{
-int pi = partition(array, 0, size - 1);
-quick_sort(array, pi - 1);
-quick_sort(array, pi + 1);
-}
+quick_sort_rec(array, size, 0, size - 1);
 }
